@@ -1,6 +1,6 @@
 # MoneyTrack – Control Inteligente de Gastos Personales
 
-Descripción
+
 MoneyTrack es una aplicación web desarrollada en React y Django REST Framework que permite gestionar ingresos y egresos 
 personales de forma visual, segura y organizada. Incluye gráficos, filtros y análisis de balance mensual, además de 
 funcionalidades como login, dashboard interactivo, y token de autenticación.
@@ -21,25 +21,25 @@ funcionalidades como login, dashboard interactivo, y token de autenticación.
 ⚙️ Instalación Local
 1. Clonar el repositorio
     
-    1) git clone https://github.com/anerca90/MoneyTrack.git
-    2) cd MoneyTrack
+    - git clone https://github.com/anerca90/MoneyTrack.git
+    - cd MoneyTrack
 
 2. Configurar el Backend
 
-    1) cd backend_moneytrack
-    2) python -m venv venv
-    3) Entorno virtual
-        A. Para Linux: source venv/bin/activate 
-        B. Para Windows: venv\Scripts\activate
-    4) pip install -r requirements.txt
-    5) python manage.py migrate
-    6) python manage.py runserver
+    - cd backend_moneytrack
+    - python -m venv venv
+    - Entorno virtual
+        - Para Linux: source venv/bin/activate 
+        - Para Windows: venv\Scripts\activate
+    - pip install -r requirements.txt
+    - python manage.py migrate
+    - python manage.py runserver
 
 3. Configurar el Frontend
 
-    1) cd frontend_moneytrack
-    2) npm install
-    3) npm start
+    - cd frontend_moneytrack
+    - npm install
+    - npm start
 
 🔐 Login de Prueba
 
