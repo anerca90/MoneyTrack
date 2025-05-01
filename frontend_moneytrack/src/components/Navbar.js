@@ -1,9 +1,23 @@
-import React, { useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaSignOutAlt, FaChartPie, FaClipboardList, FaBullseye, FaBell, FaCog } from 'react-icons/fa';
+import {
+  FaBars, FaSignOutAlt, FaChartPie, FaClipboardList,
+  FaBullseye, FaBell, FaCog
+} from 'react-icons/fa';
 
-function Navbar() {
-  const [collapsed, setCollapsed] = useState(false);
+function Navbar({ collapsed, setCollapsed }) {
+  const sidebarRef = useRef(null);  // ✅ Referencia para detectar clics fuera
+
+  // 🔻 Cierra sidebar si se hace clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setCollapsed(true);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [setCollapsed]);
 
   const sidebarStyle = {
     height: '100vh',
@@ -44,7 +58,7 @@ function Navbar() {
   };
 
   return (
-    <div style={sidebarStyle}>
+    <div style={sidebarStyle} ref={sidebarRef}>
       <div style={toggleStyle} onClick={() => setCollapsed(!collapsed)}>
         <FaBars />
       </div>
