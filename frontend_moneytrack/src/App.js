@@ -13,7 +13,8 @@ import Alerts from './components/Alerts';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => !!localStorage.getItem('token'));
   const [navbarCollapsed, setNavbarCollapsed] = useState(false);
-
+  
+  
   useEffect(() => {
     setIsAuthenticated(!!localStorage.getItem('token'));
   }, []);

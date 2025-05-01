@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa'; // 👈 importa ícono de flecha
 
 function Register() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [isSuccess, setIsSuccess] = useState(null); // nuevo estado para saber si fue exitoso o no
+  const [isSuccess, setIsSuccess] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -15,9 +16,7 @@ function Register() {
     try {
       const response = await fetch('http://localhost:8000/api/register/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, username, password })
       });
 
@@ -40,6 +39,12 @@ function Register() {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
+        {/* 🔙 Botón Volver */}
+        <div style={styles.backButton} onClick={() => navigate('/')}>
+          <FaArrowLeft style={{ marginRight: '6px' }} />
+          Volver
+        </div>
+
         <h2 style={styles.title}>Crear cuenta</h2>
         <form onSubmit={handleSubmit} style={styles.form}>
           <input
@@ -98,6 +103,17 @@ const styles = {
     backgroundColor: 'white',
     borderRadius: '10px',
     boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+    position: 'relative',
+  },
+  backButton: {
+    position: 'absolute',
+    top: '20px',
+    left: '20px',
+    color: '#3498db',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    display: 'flex',
+    alignItems: 'center'
   },
   title: {
     textAlign: 'center',
@@ -127,3 +143,4 @@ const styles = {
 };
 
 export default Register;
+

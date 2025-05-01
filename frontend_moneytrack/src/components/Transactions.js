@@ -59,13 +59,17 @@ function Transactions() {
     if (!desc || !amount || !date || !categoriaId) return;
 
     const token = localStorage.getItem('token');
+    const localDate = new Date(date);
+    localDate.setMinutes(localDate.getMinutes() + localDate.getTimezoneOffset());
+    const formattedDate = localDate.toISOString().split('T')[0];
+
     const response = await fetch('http://localhost:8000/api/transactions/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Token ${token}`
       },
-      body: JSON.stringify({ type, description: desc, actual: parseFloat(amount), date, categoria: categoriaId })
+      body: JSON.stringify({ type, description: desc, actual: parseFloat(amount), date: formattedDate, categoria: categoriaId })
     });
 
     if (response.ok) {
@@ -152,7 +156,9 @@ function Transactions() {
       <td style={styles.thtd}>{editingId === tx.id ? (
         <input style={styles.input} type="date" value={editingDate} onChange={(e) => setEditingDate(e.target.value)} required />
       ) : (
-        new Date(tx.date).toLocaleDateString('es-CL')
+        tx.date
+          ? new Date(tx.date + 'T00:00:00').toLocaleDateString('es-CL')
+          : ''
       )}</td>
       <td style={styles.thtd}>{editingId === tx.id ? (
         <select style={styles.input} value={editingCategoria} onChange={(e) => setEditingCategoria(e.target.value)} required>

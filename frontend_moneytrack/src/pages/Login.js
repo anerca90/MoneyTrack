@@ -31,12 +31,14 @@ function Login({ setIsAuthenticated }) {
         localStorage.setItem('token', data.token);
         setIsAuthenticated(true);
         navigate('/dashboard');
+        window.location.reload(); // 🔁 Fuerza recarga para asegurar que se carguen las categorías
       } else {
         setError(data.error || 'Credenciales inválidas');
       }
     } catch (error) {
       setError('Error de conexión con el servidor');
     }
+    
   };
 
   return (
