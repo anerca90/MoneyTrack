@@ -49,13 +49,15 @@ const Dashboard = () => {
   const pieExpenseCategories = {};
 
   filteredTransactions.forEach(tx => {
-    const month = tx.date.slice(0, 7);
+    const month = tx.date.slice(0, 7); // ✅ Definimos month
+    const categoriaKey = tx.categoria_nombre || 'Sin categoría';
+  
     if (tx.type === 'income') {
       incomeData[month] = (incomeData[month] || 0) + parseFloat(tx.actual);
-      pieIncomeCategories[tx.description] = (pieIncomeCategories[tx.description] || 0) + parseFloat(tx.actual);
+      pieIncomeCategories[categoriaKey] = (pieIncomeCategories[categoriaKey] || 0) + parseFloat(tx.actual);
     } else {
       expenseData[month] = (expenseData[month] || 0) + parseFloat(tx.actual);
-      pieExpenseCategories[tx.description] = (pieExpenseCategories[tx.description] || 0) + parseFloat(tx.actual);
+      pieExpenseCategories[categoriaKey] = (pieExpenseCategories[categoriaKey] || 0) + parseFloat(tx.actual);
     }
   });
 

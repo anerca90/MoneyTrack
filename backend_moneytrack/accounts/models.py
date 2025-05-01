@@ -11,7 +11,7 @@ class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
     tipo = models.CharField(max_length=10, choices=TIPO_CHOICES)
     icono = models.CharField(max_length=10, blank=True, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # 🔧 Agregar esto
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
 
     def __str__(self):
         return f"{self.nombre} ({self.tipo})"
