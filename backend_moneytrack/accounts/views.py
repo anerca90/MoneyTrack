@@ -8,7 +8,8 @@ from rest_framework.authtoken.models import Token
 
 from .models import Transaction, Categoria
 from .serializers import TransactionSerializer, CategoriaSerializer
-
+from .models import Goal, Contribution
+from .serializers import GoalSerializer, ContributionSerializer
 
 # Registro de usuario
 class RegisterView(APIView):
@@ -37,7 +38,7 @@ class LoginView(APIView):
             return Response({'error': 'Credenciales inválidas'}, status=400)
 
 
-# Vista para Transacciones
+# Vista para Transacciones (privadas por usuario)
 class TransactionViewSet(viewsets.ModelViewSet):
     serializer_class = TransactionSerializer
     permission_classes = [IsAuthenticated]
@@ -59,3 +60,12 @@ class CategoriaViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+# Vista para Metas (privadas por usuario)
+class GoalViewSet(viewsets.ModelViewSet):
+    queryset = Goal.objects.all()
+    serializer_class = GoalSerializer
+
+class ContributionViewSet(viewsets.ModelViewSet):
+    queryset = Contribution.objects.all()
+    serializer_class = ContributionSerializer

@@ -31,3 +31,15 @@ class Transaction(models.Model):
 
     def __str__(self):
         return f'{self.user.username} - {self.description}'
+
+class Goal(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tipo = models.CharField(max_length=100)
+    monto = models.DecimalField(max_digits=12, decimal_places=2)
+    fecha = models.DateField()
+    progreso = models.PositiveIntegerField(default=0)
+
+class Contribution(models.Model):
+    goal = models.ForeignKey(Goal, related_name='contributions', on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateField()
