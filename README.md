@@ -33,7 +33,7 @@ funcionalidades como login, dashboard interactivo, y token de autenticación.
         - Para Windows: venv\Scripts\activate
     - pip install -r requirements.txt
     - python manage.py migrate
-    - python manage.py runserver
+    - python manage.py runserver 0.0.0.0:8000
 
 3. Configurar el Frontend
 
@@ -61,24 +61,39 @@ funcionalidades como login, dashboard interactivo, y token de autenticación.
             "username": "admin1",
             "password": "admin"
 
+📱 Versión Móvil
+
+    La aplicación móvil se conecta al backend por IP local. 
+        
+        Verifica que:
+
+        1) Que ambos dispositivos estén en la misma red Wi-Fi.
+        2) Que tu servidor Django esté corriendo con 0.0.0.0:8000.
+        3) Que hayas reemplazado localhost por tu IP en los archivos fetch, axios, o servicios.
+
 📊 Funcionalidades Implementadas
 
-    1) Login/registro de usuarios con validación
+    1) Autenticación con token (registro, login, logout)
     2) Dashboard con gráficos:
-        A. Gráfico de barras: ingresos vs gastos por mes
+        A. Gráfico de barras: ingresos vs. gastos por mes
         B. Gráficos de torta por categoría
-        C. Balance automático
-    3) Filtros por fechas
-    4) Tablas dinámicas por transacción
-    5) Cierre de sesión
-    6) Interfaz responsiva
+        C. Balance automáticoo
+    3) Filtros por rango de fechas
+    4) Registro, edición y eliminación de transacciones
+    5) Gestión de categorías de ingreso/gasto
+    6) Metas de ahorro con progreso y aportes
+    7) Alertas por límite de gasto (en desarrollo)
+    8) Totalmente responsiva (adaptada a móvil)
 
-📝 Estado del Proyecto
+🚧 Estado del Proyecto
 
     ✅ Login y registro
     ✅ Transacciones
     ✅ Dashboard con gráficos
-    🕐 En desarrollo: Categorías, metas y alertas
+    ✅ Categorías
+    ✅ Metas
+    ✅ APK Móvil
+    🕐 En desarrollo: Alertas
 
 👨‍💻 Autores
 
