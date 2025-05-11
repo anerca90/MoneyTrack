@@ -3,6 +3,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend
 } from 'recharts';
+import '../styles/Dashboard.css';
 
 const Dashboard = () => {
   const [transactions, setTransactions] = useState([]);
@@ -13,9 +14,7 @@ const Dashboard = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     fetch('http://192.168.1.90:8000/api/transactions/', {
-      headers: {
-        'Authorization': `Token ${token}`
-      }
+      headers: { Authorization: `Token ${token}` }
     })
       .then(res => res.json())
       .then(data => {
@@ -49,9 +48,9 @@ const Dashboard = () => {
   const pieExpenseCategories = {};
 
   filteredTransactions.forEach(tx => {
-    const month = tx.date.slice(0, 7); // ✅ Definimos month
+    const month = tx.date.slice(0, 7);
     const categoriaKey = tx.categoria_nombre || 'Sin categoría';
-  
+
     if (tx.type === 'income') {
       incomeData[month] = (incomeData[month] || 0) + parseFloat(tx.actual);
       pieIncomeCategories[categoriaKey] = (pieIncomeCategories[categoriaKey] || 0) + parseFloat(tx.actual);
@@ -69,33 +68,32 @@ const Dashboard = () => {
   }));
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
-
   const pieData = (source) => Object.entries(source).map(([name, value]) => ({ name, value }));
 
-  const renderPieTable = (source, type) => {
+  const renderPieTable = (source) => {
     const entries = Object.entries(source);
     const total = entries.reduce((sum, [, val]) => sum + val, 0);
     return (
-      <table style={{ width: '100%', marginTop: '10px', borderCollapse: 'collapse', background: '#ecf0f1', color: '#333', boxShadow: '0 0 10px rgba(0,0,0,0.1)', borderRadius: '6px' }}>
+      <table className="goals-table">
         <thead style={{ background: '#3498db', color: 'white' }}>
           <tr>
-            <th style={{ padding: '8px', textAlign: 'left' }}>N°</th>
-            <th style={{ padding: '8px', textAlign: 'left' }}>Categoría</th>
-            <th style={{ padding: '8px', textAlign: 'right' }}>Monto</th>
+            <th className="goals-th">N°</th>
+            <th className="goals-th">Categoría</th>
+            <th className="goals-th" style={{ textAlign: 'right' }}>Monto</th>
           </tr>
         </thead>
         <tbody>
           {entries.map(([name, value], i) => (
             <tr key={i}>
-              <td style={{ padding: '8px' }}>{i + 1}</td>
-              <td style={{ padding: '8px', textAlign: 'left' }}>{name}</td>
-              <td style={{ padding: '8px', textAlign: 'right' }}>{formatMoney(value)}</td>
+              <td className="goals-td">{i + 1}</td>
+              <td className="goals-td">{name}</td>
+              <td className="goals-td" style={{ textAlign: 'right' }}>{formatMoney(value)}</td>
             </tr>
           ))}
-          <tr style={{ fontWeight: 'bold', borderTop: '1px solid #ccc' }}>
+          <tr className="goals-td" style={{ fontWeight: 'bold', borderTop: '1px solid #ccc' }}>
             <td></td>
-            <td style={{ padding: '8px', textAlign: 'right' }}>Total</td>
-            <td style={{ padding: '8px', textAlign: 'right' }}>{formatMoney(total)}</td>
+            <td style={{ textAlign: 'right' }}>Total</td>
+            <td style={{ textAlign: 'right' }}>{formatMoney(total)}</td>
           </tr>
         </tbody>
       </table>
@@ -105,28 +103,28 @@ const Dashboard = () => {
   const renderTable = (data) => {
     const total = data.reduce((sum, row) => sum + row.Total, 0);
     return (
-      <table style={{ width: '100%', marginTop: '10px', borderCollapse: 'collapse', background: '#ecf0f1', color: '#333', boxShadow: '0 0 10px rgba(0,0,0,0.1)', borderRadius: '6px' }}>
+      <table className="goals-table">
         <thead style={{ background: '#3498db', color: 'white' }}>
           <tr>
-            <th style={{ padding: '8px', textAlign: 'left' }}>Fecha</th>
-            <th style={{ padding: '8px', textAlign: 'right' }}>Ingresos</th>
-            <th style={{ padding: '8px', textAlign: 'right' }}>Gastos</th>
-            <th style={{ padding: '8px', textAlign: 'right' }}>Total</th>
+            <th className="goals-th">Fecha</th>
+            <th className="goals-th" style={{ textAlign: 'right' }}>Ingresos</th>
+            <th className="goals-th" style={{ textAlign: 'right' }}>Gastos</th>
+            <th className="goals-th" style={{ textAlign: 'right' }}>Total</th>
           </tr>
         </thead>
         <tbody>
           {data.map((row, i) => (
             <tr key={i}>
-              <td style={{ padding: '8px' }}>{row.month}</td>
-              <td style={{ padding: '8px', textAlign: 'right' }}>{formatMoney(row.Ingresos)}</td>
-              <td style={{ padding: '8px', textAlign: 'right' }}>{formatMoney(row.Gastos)}</td>
-              <td style={{ padding: '8px', textAlign: 'right' }}>{formatMoney(row.Total)}</td>
+              <td className="goals-td">{row.month}</td>
+              <td className="goals-td" style={{ textAlign: 'right' }}>{formatMoney(row.Ingresos)}</td>
+              <td className="goals-td" style={{ textAlign: 'right' }}>{formatMoney(row.Gastos)}</td>
+              <td className="goals-td" style={{ textAlign: 'right' }}>{formatMoney(row.Total)}</td>
             </tr>
           ))}
-          <tr style={{ fontWeight: 'bold', borderTop: '1px solid #ccc' }}>
+          <tr className="goals-td" style={{ fontWeight: 'bold', borderTop: '1px solid #ccc' }}>
             <td colSpan="2"></td>
-            <td style={{ padding: '8px', textAlign: 'right' }}>Total</td>
-            <td style={{ padding: '8px', textAlign: 'right' }}>{formatMoney(total)}</td>
+            <td style={{ textAlign: 'right' }}>Total</td>
+            <td style={{ textAlign: 'right' }}>{formatMoney(total)}</td>
           </tr>
         </tbody>
       </table>
@@ -137,87 +135,16 @@ const Dashboard = () => {
   const totalExpense = Object.values(pieExpenseCategories).reduce((a, b) => a + b, 0);
   const balance = totalIncome - totalExpense;
 
-  const styles = {
-    container: {
-      marginLeft: '20px',
-      padding: '30px',
-      minHeight: '100vh',
-      boxSizing: 'border-box'
-    },
-    row: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around',
-      gap: '60px'
-    },
-    chartBox: {
-      width: '100%',
-      maxWidth: '900px',
-      margin: '0 auto',
-      marginBottom: '40px',
-      backgroundColor: '#f4f4f4',
-      padding: '20px',
-      borderRadius: '10px'
-    },
-    filter: {
-      marginBottom: '30px',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '10px',
-      alignItems: 'flex-start',
-      background: '#e0f7fa',
-      padding: '20px 25px',
-      borderRadius: '10px',
-      fontSize: '14px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
-    },
-    filterButtons: {
-      display: 'flex',
-      gap: '12px',
-      flexWrap: 'wrap'
-    },
-    filterButton: {
-      backgroundColor: '#ffffff',
-      border: '1px solid #aaa',
-      borderRadius: '6px',
-      padding: '8px 14px',
-      cursor: 'pointer',
-      fontWeight: 'bold',
-      transition: 'background 0.3s, transform 0.2s'
-    },
-    pieSection: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      width: '45%',
-      backgroundColor: '#f4f4f4',
-      padding: '20px',
-      borderRadius: '10px'
-    },
-    sideBySide: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'flex-start',
-      gap: '20px',
-      backgroundColor: '#f4f4f4',
-      padding: '20px',
-      borderRadius: '10px'
-    },
-    half: {
-      width: '50%'
-    }
-  };
-
   return (
-    <div style={styles.container}>
+    <div className="dashboard-container">
       <h2>Dashboard Principal</h2>
 
-      <div style={styles.filter}>
-        <div style={styles.filterButtons}>
+      <div className="dashboard-filter">
+        <div className="dashboard-filter-buttons">
           <strong>Tipo de Filtro:</strong>
-          <button style={styles.filterButton} onClick={() => setFilterType('range')}>Rango Fechas</button>
-          <button style={styles.filterButton} onClick={() => setFilterType('before')}>Anterior a</button>
-          <button style={styles.filterButton} onClick={() => setFilterType('after')}>Posterior a</button>
+          <button className="dashboard-filter-button" onClick={() => setFilterType('range')}>Rango Fechas</button>
+          <button className="dashboard-filter-button" onClick={() => setFilterType('before')}>Anterior a</button>
+          <button className="dashboard-filter-button" onClick={() => setFilterType('after')}>Posterior a</button>
         </div>
         <div>
           <label>Desde: <input type="date" value={dateRange.from} onChange={e => setDateRange({ ...dateRange, from: e.target.value })} /></label>
@@ -225,8 +152,8 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div style={styles.sideBySide}>
-        <div style={styles.half}>
+      <div className="dashboard-side-by-side">
+        <div className="dashboard-half">
           <h3>Comparación Mensual de Ingresos y Gastos</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={barData} margin={{ top: 20, right: 60, left: 80, bottom: 40 }}>
@@ -240,7 +167,7 @@ const Dashboard = () => {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div style={styles.half}>
+        <div className="dashboard-half">
           <h4>Resumen Ingresos vs Gastos</h4>
           {renderTable(barData)}
         </div>
@@ -248,8 +175,8 @@ const Dashboard = () => {
 
       <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>Balance Actual: {formatMoney(balance)}</h3>
 
-      <div style={styles.row}>
-        <div style={styles.pieSection}>
+      <div className="dashboard-row">
+        <div className="dashboard-pie-section">
           <h4>Distribución de Ingresos</h4>
           <PieChart width={500} height={360}>
             <Pie
@@ -272,7 +199,7 @@ const Dashboard = () => {
           {renderPieTable(pieIncomeCategories)}
         </div>
 
-        <div style={styles.pieSection}>
+        <div className="dashboard-pie-section">
           <h4>Distribución de Gastos</h4>
           <PieChart width={500} height={360}>
             <Pie

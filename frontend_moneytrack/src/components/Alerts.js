@@ -1,17 +1,9 @@
 import React from 'react';
+import '../styles/Alerts.css';
 
 function Alerts() {
-  const styles = {
-    container: {
-      marginLeft: '20px',
-      padding: '30px',
-      minHeight: '100vh',
-      boxSizing: 'border-box'
-    }
-  };
-
   return (
-    <div style={styles.container}>
+    <div className="alerts-container">
       <h2>Alertas</h2>
       <p>Notificaciones por límites de gasto.</p>
     </div>

@@ -5,12 +5,17 @@ function Logout({ setIsAuthenticated }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.removeItem('token'); // 👈 elimina token
-    setIsAuthenticated(false);        // 👈 cambia estado global
+    // ✅ Elimina el token de autenticación
+    localStorage.removeItem('token');
+
+    // ✅ Actualiza el estado global de autenticación
+    setIsAuthenticated(false);
+
+    // ✅ Redirige al login
     navigate('/');
   }, [setIsAuthenticated, navigate]);
 
-  return null;
+  return null; // No muestra contenido
 }
 
 export default Logout;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../styles/Transactions.css';
 
 function Transactions() {
   const [transactions, setTransactions] = useState([]);
@@ -43,7 +44,7 @@ function Transactions() {
     const response = await fetch('http://192.168.1.90:8000/api/categorias/', {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`  // 🔧 Token agregado aquí
+        'Authorization': `Token ${token}`
       }
     });
 
@@ -121,30 +122,14 @@ function Transactions() {
     fetchTransactions();
   };
 
-  const expenses = transactions.filter(tx => tx.type === 'expense');
-  const incomes = transactions.filter(tx => tx.type === 'income');
-
-  const styles = {
-    container: { display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '30px' },
-    totalsRow: { display: 'flex', justifyContent: 'center', gap: '50px', marginBottom: '20px', fontSize: '18px', fontWeight: 'bold' },
-    balance: (value) => ({ color: value >= 0 ? 'green' : 'red' }),
-    cardContainer: { display: 'flex', justifyContent: 'space-around', width: '100%' },
-    card: { background: '#f9f9f9', borderRadius: '10px', padding: '20px', width: '45%', boxShadow: '0 0 10px rgba(0,0,0,0.05)' },
-    button: { padding: '20px', border: 'none', borderRadius: '5px', color: 'white', marginTop: '10px', cursor: 'pointer', width: '100%', fontSize: '16px' },
-    red: { backgroundColor: '#e74c3c' },
-    green: { backgroundColor: '#2ecc71' },
-    input: { width: '100%', padding: '10px', marginBottom: '10px' },
-    table: { width: '100%', marginTop: '20px', borderCollapse: 'collapse' },
-    thtd: { padding: '10px', textAlign: 'center', borderBottom: '1px solid #ddd' },
-    totals: { fontWeight: 'bold', marginTop: '15px', display: 'flex', justifyContent: 'space-between' }
-  };
-
   const formatMoney = (value) => {
     const number = parseFloat(value);
     if (isNaN(number)) return '$0';
     return '$' + number.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
   };
 
+  const expenses = transactions.filter(tx => tx.type === 'expense');
+  const incomes = transactions.filter(tx => tx.type === 'income');
   const totalAmount = (items) => items.reduce((acc, tx) => acc + parseFloat(tx.actual), 0);
   const totalIncome = totalAmount(incomes);
   const totalExpense = totalAmount(expenses);
@@ -152,35 +137,41 @@ function Transactions() {
 
   const renderRows = (items, type) => items.map((tx, i) => (
     <tr key={tx.id}>
-      <td style={styles.thtd}>{i + 1}</td>
-      <td style={styles.thtd}>{editingId === tx.id ? (
-        <input style={styles.input} type="date" value={editingDate} onChange={(e) => setEditingDate(e.target.value)} required />
-      ) : (
-        tx.date
-          ? new Date(tx.date + 'T00:00:00').toLocaleDateString('es-CL')
-          : ''
-      )}</td>
-      <td style={styles.thtd}>{editingId === tx.id ? (
-        <select style={styles.input} value={editingCategoria} onChange={(e) => setEditingCategoria(e.target.value)} required>
-          <option value="">Seleccionar</option>
-          {categorias.filter(c => c.tipo === tx.type).map(cat => (
-            <option key={cat.id} value={cat.id}>{cat.nombre}</option>
-          ))}
-        </select>
-      ) : (
-        categorias.find(c => c.id === tx.categoria)?.nombre || '—'
-      )}</td>
-      <td style={styles.thtd}>{editingId === tx.id ? (
-        <input style={styles.input} value={editingDesc} onChange={(e) => setEditingDesc(e.target.value)} required />
-      ) : (
-        tx.description
-      )}</td>
-      <td style={styles.thtd}>{editingId === tx.id ? (
-        <input style={styles.input} type="number" value={editingAmount} onChange={(e) => setEditingAmount(e.target.value)} required />
-      ) : (
-        formatMoney(tx.actual)
-      )}</td>
-      <td style={styles.thtd}>
+      <td>{i + 1}</td>
+      <td>
+        {editingId === tx.id ? (
+          <input className="tx-input" type="date" value={editingDate} onChange={(e) => setEditingDate(e.target.value)} required />
+        ) : (
+          tx.date ? new Date(tx.date + 'T00:00:00').toLocaleDateString('es-CL') : ''
+        )}
+      </td>
+      <td>
+        {editingId === tx.id ? (
+          <select className="tx-input" value={editingCategoria} onChange={(e) => setEditingCategoria(e.target.value)} required>
+            <option value="">Seleccionar</option>
+            {categorias.filter(c => c.tipo === tx.type).map(cat => (
+              <option key={cat.id} value={cat.id}>{cat.nombre}</option>
+            ))}
+          </select>
+        ) : (
+          categorias.find(c => c.id === tx.categoria)?.nombre || '—'
+        )}
+      </td>
+      <td>
+        {editingId === tx.id ? (
+          <input className="tx-input" value={editingDesc} onChange={(e) => setEditingDesc(e.target.value)} required />
+        ) : (
+          tx.description
+        )}
+      </td>
+      <td>
+        {editingId === tx.id ? (
+          <input className="tx-input" type="number" value={editingAmount} onChange={(e) => setEditingAmount(e.target.value)} required />
+        ) : (
+          formatMoney(tx.actual)
+        )}
+      </td>
+      <td>
         {editingId === tx.id ? (
           <span role="img" aria-label="Guardar" onClick={handleUpdate} style={{ cursor: 'pointer' }}>💾</span>
         ) : (
@@ -194,42 +185,44 @@ function Transactions() {
   ));
 
   return (
-    <div style={styles.container}>
-      <div style={styles.totalsRow}>
+    <div className="transactions-container">
+      <div className="totals-row">
         <div>Total Ingresos: {formatMoney(totalIncome)}</div>
         <div>Total Gastos: {formatMoney(totalExpense)}</div>
-        <div style={styles.balance(balance)}>Balance: {formatMoney(balance)}</div>
+        <div className={balance >= 0 ? "balance-positive" : "balance-negative"}>
+          Balance: {formatMoney(balance)}
+        </div>
       </div>
-      <div style={styles.cardContainer}>
-        {/* GASTOS */}
-        <div style={styles.card}>
+
+      <div className="card-container">
+        {/* Gastos */}
+        <div className="tx-card">
           <h3>Gastos</h3>
-          <form onSubmit={(e) => {
+          <form className="tx-form" onSubmit={(e) => {
             e.preventDefault();
             handleAddTransaction('expense', expenseDesc, expenseAmount, expenseDate, expenseCategoria, setExpenseDesc, setExpenseAmount, setExpenseDate, setExpenseCategoria);
           }}>
-            <input style={styles.input} value={expenseDesc} onChange={(e) => setExpenseDesc(e.target.value)} placeholder="Descripción" required />
-            <input style={styles.input} value={expenseAmount} onChange={(e) => setExpenseAmount(e.target.value)} placeholder="Monto" required type="number" />
-            <input style={styles.input} value={expenseDate} onChange={(e) => setExpenseDate(e.target.value)} placeholder="Fecha" required type="date" />
-            <select style={styles.input} value={expenseCategoria} onChange={e => setExpenseCategoria(e.target.value)} required>
+            <input className="tx-input" value={expenseDesc} onChange={(e) => setExpenseDesc(e.target.value)} placeholder="Descripción" required />
+            <input className="tx-input" value={expenseAmount} onChange={(e) => setExpenseAmount(e.target.value)} placeholder="Monto" required type="number" />
+            <input className="tx-input" value={expenseDate} onChange={(e) => setExpenseDate(e.target.value)} placeholder="Fecha" required type="date" />
+            <select className="tx-input" value={expenseCategoria} onChange={e => setExpenseCategoria(e.target.value)} required>
               <option value="">Seleccionar categoría</option>
               {categorias.filter(c => c.tipo === 'gasto').map(cat => (
                 <option key={cat.id} value={cat.id}>{cat.nombre}</option>
               ))}
             </select>
-            <button style={{ ...styles.button, ...styles.red }} type="submit">
-              + Agregar Gasto
-            </button>
+            <button className="tx-button red" type="submit">+ Agregar Gasto</button>
           </form>
-          <table style={styles.table}>
+
+          <table className="tx-table">
             <thead>
               <tr>
-                <th style={styles.thtd}>Ítem</th>
-                <th style={styles.thtd}>Fecha</th>
-                <th style={styles.thtd}>Categoría</th>
-                <th style={styles.thtd}>Descripción</th>
-                <th style={styles.thtd}>Monto</th>
-                <th style={styles.thtd}>Acciones</th>
+                <th>Ítem</th>
+                <th>Fecha</th>
+                <th>Categoría</th>
+                <th>Descripción</th>
+                <th>Monto</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -238,35 +231,34 @@ function Transactions() {
           </table>
         </div>
 
-        {/* INGRESOS */}
-        <div style={styles.card}>
+        {/* Ingresos */}
+        <div className="tx-card">
           <h3>Ingresos</h3>
-          <form onSubmit={(e) => {
+          <form className="tx-form" onSubmit={(e) => {
             e.preventDefault();
             handleAddTransaction('income', incomeDesc, incomeAmount, incomeDate, incomeCategoria, setIncomeDesc, setIncomeAmount, setIncomeDate, setIncomeCategoria);
           }}>
-            <input style={styles.input} value={incomeDesc} onChange={(e) => setIncomeDesc(e.target.value)} placeholder="Descripción" required />
-            <input style={styles.input} value={incomeAmount} onChange={(e) => setIncomeAmount(e.target.value)} placeholder="Monto" required type="number" />
-            <input style={styles.input} value={incomeDate} onChange={(e) => setIncomeDate(e.target.value)} placeholder="Fecha" required type="date" />
-            <select style={styles.input} value={incomeCategoria} onChange={e => setIncomeCategoria(e.target.value)} required>
+            <input className="tx-input" value={incomeDesc} onChange={(e) => setIncomeDesc(e.target.value)} placeholder="Descripción" required />
+            <input className="tx-input" value={incomeAmount} onChange={(e) => setIncomeAmount(e.target.value)} placeholder="Monto" required type="number" />
+            <input className="tx-input" value={incomeDate} onChange={(e) => setIncomeDate(e.target.value)} placeholder="Fecha" required type="date" />
+            <select className="tx-input" value={incomeCategoria} onChange={e => setIncomeCategoria(e.target.value)} required>
               <option value="">Seleccionar categoría</option>
               {categorias.filter(c => c.tipo === 'ingreso').map(cat => (
                 <option key={cat.id} value={cat.id}>{cat.nombre}</option>
               ))}
             </select>
-            <button style={{ ...styles.button, ...styles.green }} type="submit">
-              + Agregar Ingreso
-            </button>
+            <button className="tx-button green" type="submit">+ Agregar Ingreso</button>
           </form>
-          <table style={styles.table}>
+
+          <table className="tx-table">
             <thead>
               <tr>
-                <th style={styles.thtd}>Ítem</th>
-                <th style={styles.thtd}>Fecha</th>
-                <th style={styles.thtd}>Categoría</th>
-                <th style={styles.thtd}>Descripción</th>
-                <th style={styles.thtd}>Monto</th>
-                <th style={styles.thtd}>Acciones</th>
+                <th>Ítem</th>
+                <th>Fecha</th>
+                <th>Categoría</th>
+                <th>Descripción</th>
+                <th>Monto</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>

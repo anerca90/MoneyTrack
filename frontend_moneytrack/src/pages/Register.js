@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa'; // 👈 importa ícono de flecha
+import { FaArrowLeft } from 'react-icons/fa';
+import '../styles/Register.css'; // 👈 Importa los estilos externos
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -37,22 +38,21 @@ function Register() {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        {/* 🔙 Botón Volver */}
-        <div style={styles.backButton} onClick={() => navigate('/')}>
+    <div className="register-container">
+      <div className="register-card">
+        <div className="register-back" onClick={() => navigate('/')}>
           <FaArrowLeft style={{ marginRight: '6px' }} />
           Volver
         </div>
 
-        <h2 style={styles.title}>Crear cuenta</h2>
-        <form onSubmit={handleSubmit} style={styles.form}>
+        <h2 className="register-title">Crear cuenta</h2>
+        <form onSubmit={handleSubmit} className="register-form">
           <input
             type="text"
             placeholder="Nombre de usuario"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            style={styles.input}
+            className="register-input"
             required
           />
           <input
@@ -60,7 +60,7 @@ function Register() {
             placeholder="Correo electrónico"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={styles.input}
+            className="register-input"
             required
           />
           <input
@@ -68,19 +68,13 @@ function Register() {
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={styles.input}
+            className="register-input"
             required
           />
-          <button type="submit" style={styles.button}>Registrarse</button>
+          <button type="submit" className="register-button">Registrarse</button>
         </form>
         {message && (
-          <p
-            style={{
-              textAlign: 'center',
-              marginTop: '15px',
-              color: isSuccess ? 'green' : 'red',
-            }}
-          >
+          <p className={`register-message ${isSuccess ? 'success' : 'error'}`}>
             {message}
           </p>
         )}
@@ -89,58 +83,4 @@ function Register() {
   );
 }
 
-const styles = {
-  container: {
-    minHeight: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f4f4f4',
-  },
-  card: {
-    width: '400px',
-    padding: '30px',
-    backgroundColor: 'white',
-    borderRadius: '10px',
-    boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-    position: 'relative',
-  },
-  backButton: {
-    position: 'absolute',
-    top: '20px',
-    left: '20px',
-    color: '#3498db',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    display: 'flex',
-    alignItems: 'center'
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: '20px',
-    color: '#9b4de0',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '15px',
-  },
-  input: {
-    padding: '12px',
-    fontSize: '16px',
-    borderRadius: '8px',
-    border: '1px solid #ccc',
-  },
-  button: {
-    backgroundColor: '#9b4de0',
-    color: 'white',
-    border: 'none',
-    padding: '12px',
-    borderRadius: '8px',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-  },
-};
-
 export default Register;
-

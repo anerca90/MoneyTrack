@@ -1,0 +1,78 @@
+.register-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+  }
+  
+  .register-card {
+    width: 400px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .register-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #3498db;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+  
+  .register-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #9b4de0;
+  }
+  
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .register-input {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .register-button {
+    background-color: #9b4de0;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .register-message {
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  .register-message.success {
+    color: green;
+  }
+  
+  .register-message.error {
+    color: red;
+  }
+  
+  /* Responsive */
+  @media (max-width: 500px) {
+    .register-card {
+      width: 90%;
+      padding: 20px;
+    }
+  }
+  
