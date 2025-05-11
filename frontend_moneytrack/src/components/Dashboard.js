@@ -12,7 +12,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    fetch('http://localhost:8000/api/transactions/', {
+    fetch('http://192.168.1.90:8000/api/transactions/', {
       headers: {
         'Authorization': `Token ${token}`
       }

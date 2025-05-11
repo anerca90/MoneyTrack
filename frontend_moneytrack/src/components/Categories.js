@@ -4,7 +4,7 @@ import axios from 'axios';
 // 🔐 Instancia de axios con autenticación
 const token = localStorage.getItem('token');
 const axiosAuth = axios.create({
-  baseURL: 'http://localhost:8000/api/',
+  baseURL: 'http://192.168.1.90:8000/api/',
   headers: {
     'Authorization': `Token ${token}`,
     'Content-Type': 'application/json'

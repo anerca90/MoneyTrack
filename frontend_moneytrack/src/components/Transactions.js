@@ -28,7 +28,7 @@ function Transactions() {
 
   const fetchTransactions = async () => {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8000/api/transactions/', {
+    const response = await fetch('http://192.168.1.90:8000/api/transactions/', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Token ${token}`
@@ -40,7 +40,7 @@ function Transactions() {
 
   const fetchCategorias = async () => {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8000/api/categorias/', {
+    const response = await fetch('http://192.168.1.90:8000/api/categorias/', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Token ${token}`  // 🔧 Token agregado aquí
@@ -63,7 +63,7 @@ function Transactions() {
     localDate.setMinutes(localDate.getMinutes() + localDate.getTimezoneOffset());
     const formattedDate = localDate.toISOString().split('T')[0];
 
-    const response = await fetch('http://localhost:8000/api/transactions/', {
+    const response = await fetch('http://192.168.1.90:8000/api/transactions/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ function Transactions() {
 
   const handleDelete = async (id) => {
     const token = localStorage.getItem('token');
-    await fetch(`http://localhost:8000/api/transactions/${id}/`, {
+    await fetch(`http://192.168.1.90:8000/api/transactions/${id}/`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Token ${token}`
@@ -103,7 +103,7 @@ function Transactions() {
 
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
-    await fetch(`http://localhost:8000/api/transactions/${editingId}/`, {
+    await fetch(`http://192.168.1.90:8000/api/transactions/${editingId}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

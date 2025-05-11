@@ -14,7 +14,7 @@ function Login({ setIsAuthenticated }) {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/api/login/', {
+      const response = await fetch('http://192.168.1.90:8000/api/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

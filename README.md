@@ -45,7 +45,7 @@ funcionalidades como login, dashboard interactivo, y token de autenticación.
 
     1) Puedes usar el endpoint de login en Postman:
 
-        * URL: http://localhost:8000/api/login/
+        * URL: http://192.168.1.90:8000/api/login/
         * Método: POST
         * Cuerpo:
                 {
@@ -55,7 +55,7 @@ funcionalidades como login, dashboard interactivo, y token de autenticación.
                 
     2) O bien directo en la pagina web:
 
-        * URL: http://localhost:3000
+        * URL: http://192.168.1.90:3000
         * Método: Web
         * Credenciales:
             "username": "admin1",

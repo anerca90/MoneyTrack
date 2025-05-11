@@ -21,7 +21,7 @@ function Goals() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/goals/', { headers })
+    fetch('http://192.168.1.90:8000/api/goals/', { headers })
       .then(res => res.json())
       .then(data => setGoals(data))
       .catch(err => console.error('Error al cargar metas:', err));
@@ -44,7 +44,7 @@ function Goals() {
       fecha: goalDate
     };
 
-    fetch('http://localhost:8000/api/goals/', {
+    fetch('http://192.168.1.90:8000/api/goals/', {
       method: 'POST',
       headers,
       body: JSON.stringify(nueva)
@@ -71,7 +71,7 @@ function Goals() {
       date: contributionDate
     };
 
-    fetch('http://localhost:8000/api/contributions/', {
+    fetch('http://192.168.1.90:8000/api/contributions/', {
       method: 'POST',
       headers,
       body: JSON.stringify(aporte)
