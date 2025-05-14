@@ -139,7 +139,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'moneytrack36@gmail.com'
-EMAIL_HOST_PASSWORD = ''
-DEFAULT_FROM_EMAIL = 'MoneyTrack <moneytrack36@gmail.com>'
+EMAIL_HOST_USER = 'Coloque su correo'
+EMAIL_HOST_PASSWORD = 'Coloque su contraseña'
+DEFAULT_FROM_EMAIL = 'MoneyTrack <Coloque su correo>'
 
