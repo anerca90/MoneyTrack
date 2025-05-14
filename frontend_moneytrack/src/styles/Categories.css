@@ -1,84 +1,253 @@
-.categorias-container {
-    padding: 20px;
-    background: #e5e7eb;
-    min-height: 100vh;
-    font-family: sans-serif;
-  }
-  
-  .categorias-title {
-    text-align: center;
-    background: #d1d5db;
-    padding: 10px;
-    font-weight: bold;
-    font-size: 20px;
-  }
-  
-  .categorias-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .categorias-column {
-    flex: 1;
-    padding: 20px;
-    min-width: 300px;
-  }
-  
-  .categorias-header {
-    background: #e9d5ff;
-    padding: 10px;
-    text-align: center;
-    font-weight: bold;
-  }
-  
-  .categorias-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .categorias-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    margin-right: 10px;
-  }
-  
-  .categorias-input {
-    margin: 5px 0;
-    padding: 8px;
-    width: 90%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .categorias-addBtn {
-    background: #ec4899;
-    color: white;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .categorias-form {
-    display: flex;
+/* === CONTENEDOR GENERAL === */
+.categoria-container {
+  padding: 2rem;
+  background: #f3f4f6;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.categoria-titulo {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+}
+
+/* === GRID DE COLUMNAS === */
+.categoria-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  padding: 1rem;
+}
+
+.categoria-columna {
+  flex: 1 1 300px;
+  padding: 1rem;
+}
+
+/* Encabezados de categoría */
+.categoria-header {
+  padding: 0.75rem;
+  font-weight: bold;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Colores amigables para cada sección */
+.categoria-header.ingresos {
+  background: #4ADE80; /* Verde pastel, amigable y positivo */
+  color: white;
+}
+
+.categoria-header.gastos {
+  background: #F87171; /* Rojo suave, pero sin agresividad */
+  color: white;
+}
+
+/* === CADA CATEGORÍA ITEM === */
+.categoria-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.categoria-icono {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 22px;
+  color: white;
+  background: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.categoria-nombre {
+  flex: 1;
+  font-size: 1rem;
+  color: #111827;
+  padding-left: 0.5rem;
+  text-align: left;
+}
+
+/* === EDICIÓN === */
+.categoria-editar {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+/* === FORMULARIO === */
+.categoria-form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.categoria-input {
+  width: 90%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+}
+
+/* === BOTÓN AÑADIR === */
+.categoria-add {
+  background: #ec4899;
+  color: white;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.categoria-add:hover {
+  background: #be185d;
+}
+
+/* === BOTONES DE ACCIÓN === */
+.categoria-acciones {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.categoria-acciones button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #374151;
+}
+
+.categoria-acciones button:hover {
+  color: #111827;
+}
+
+/* === SCROLL LIMITADO === */
+.categoria-lista-scroll {
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* === PERSONALIZAR SCROLL === */
+.categoria-lista-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.categoria-lista-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.categoria-lista-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .categoria-columns {
     flex-direction: column;
-    align-items: center;
-    margin-top: 10px;
+    padding: 0;
   }
-  
+
+  .categoria-columna {
+    padding: 1rem 0.5rem;
+  }
+
+  .categoria-item {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .categoria-nombre,
+  .categoria-editar {
+    flex: 1 1 100%;
+    text-align: left;
+  }
+
+  .categoria-input {
+    width: 100% !important;
+  }
+
+  .categoria-add {
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1.1rem;
+  }
+
+  .categoria-icono {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+
+  .categoria-lista-scroll {
+    max-height: 340px;
+  }
+}
+
+.categoria-acciones .button {
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 8px 0;
+  min-width: 60px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+
+.categoria-acciones .button:hover {
+  opacity: 0.9;
+}
+
+.button.red {
+  background-color: #ef4444;
+  color: white;
+}
+
+.button.blue {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.button.green {
+  background-color: #10b981;
+  color: white;
+}

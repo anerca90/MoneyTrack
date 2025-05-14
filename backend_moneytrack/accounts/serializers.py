@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Transaction, Categoria
 from .models import Goal, Contribution
+from .models import Alert
 
 class CategoriaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,7 +25,18 @@ class ContributionSerializer(serializers.ModelSerializer):
 
 class GoalSerializer(serializers.ModelSerializer):
     contributions = ContributionSerializer(many=True, read_only=True)
+    progreso = serializers.SerializerMethodField()
 
     class Meta:
         model = Goal
+        fields = ['id', 'tipo', 'monto', 'fecha', 'contributions', 'progreso']
+
+    def get_progreso(self, obj):
+        total = sum(c.amount for c in obj.contributions.all())
+        return int(min((total / obj.monto) * 100, 100)) if obj.monto else 0
+    
+class AlertSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Alert
         fields = '__all__'
+        read_only_fields = ['user']

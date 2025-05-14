@@ -1,90 +1,198 @@
 .goals-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 30px;
-    font-family: sans-serif;
-  }
-  
-  .goals-column {
-    flex: 1 1 45%;
-    min-width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .goals-box {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .goals-input,
-  .goals-select {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.goals-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #333;
+}
+
+.goal-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.goal-form input,
+.goal-form select,
+.goal-form button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  min-width: 180px;
+}
+
+.goal-form button {
+  background-color: #8e44ad;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.goal-form button:hover {
+  background-color: #732d91;
+}
+
+.goals-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.goal-card {
+  background: #fdfdfd;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.goal-card:hover {
+  transform: scale(1.02);
+}
+
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.goal-icon {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.goal-actions button {
+  background-color: #2980b9;
+  color: white;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.goal-actions button:hover {
+  background-color: #1f6391;
+}
+
+.goal-body p {
+  margin: 5px 0;
+  font-size: 15px;
+  color: #444;
+}
+
+.progress {
+  height: 16px;
+  background: #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #2ecc71;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 13px;
+  margin-top: 6px;
+  text-align: right;
+  color: #555;
+}
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .goal-form input,
+  .goal-form select,
+  .goal-form button {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
   }
-  
-  .goals-row-space {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  
-  .goals-button {
-    padding: 10px 20px;
-    border-radius: 6px;
-    border: none;
-    background-color: #8e44ad;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .goals-progress-bg {
-    height: 20px;
-    background-color: #ddd;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .goals-progress-bar {
-    height: 100%;
-    transition: width 0.3s ease;
-  }
-  
-  .goals-table {
+
+  .goal-card {
     width: 100%;
-    border-collapse: collapse;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   }
-  
-  .goals-th {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ccc;
+}
+
+.button.nueva-meta {
+  width: auto;
+  padding: 10px 80px;
+  border-radius: 100px;
+  background-color: #9900ffbb;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  transition: background-color 0.3s;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.button.nueva-meta:hover {
+  background-color: #0056b3;
+}
+
+.acciones-top {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.fab:hover {
+  background-color: #0056b3;
+}
+
+@media (min-width: 768px) {
+  .fab {
+    display: none; /* solo en pantallas pequeñas */
   }
-  
-  .goals-td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-    vertical-align: middle;
+}
+
+/* Mostrar solo en pantallas grandes */
+.desktop-only {
+  display: none;
+}
+@media (min-width: 768px) {
+  .desktop-only {
+    display: inline-block;
   }
-  
-  @media (max-width: 768px) {
-    .goals-column {
-      flex: 1 1 100%;
-    }
+}
+
+/* Mostrar solo en móviles */
+.mobile-only {
+  display: inline-block;
+}
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none;
   }
-  
+}

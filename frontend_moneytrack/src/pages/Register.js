@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
-import '../styles/Register.css'; // 👈 Importa los estilos externos
+import '../styles/Register.css';
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -9,10 +9,14 @@ function Register() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setMessage('');
+    setIsSuccess(null);
 
     try {
       const response = await fetch('http://192.168.1.90:8000/api/register/', {
@@ -24,16 +28,23 @@ function Register() {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage('Usuario registrado correctamente');
+        setMessage('✅ Usuario registrado correctamente');
         setIsSuccess(true);
-        setTimeout(() => navigate('/'), 2000);
+        setTimeout(() => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('alertasNuevas');
+          sessionStorage.clear();
+          window.location.href = '/';
+        }, 2000);
       } else {
-        setMessage(data.error || 'Error al registrar');
+        setMessage(data.error || '❌ Error al registrar');
         setIsSuccess(false);
       }
     } catch (error) {
-      setMessage('Error de conexión con el servidor');
+      setMessage('⚠️ Error de conexión con el servidor');
       setIsSuccess(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,11 +52,12 @@ function Register() {
     <div className="register-container">
       <div className="register-card">
         <div className="register-back" onClick={() => navigate('/')}>
-          <FaArrowLeft style={{ marginRight: '6px' }} />
-          Volver
+          <FaArrowLeft className="back-icon" />
+          Volver al inicio
         </div>
 
         <h2 className="register-title">Crear cuenta</h2>
+
         <form onSubmit={handleSubmit} className="register-form">
           <input
             type="text"
@@ -71,8 +83,17 @@ function Register() {
             className="register-input"
             required
           />
-          <button type="submit" className="register-button">Registrarse</button>
+          <button type="submit" className="register-button" disabled={loading}>
+            {loading ? (
+              <span className="loading-content">
+                <span className="spinner" /> Registrando...
+              </span>
+            ) : (
+              'Registrarse'
+            )}
+          </button>
         </form>
+
         {message && (
           <p className={`register-message ${isSuccess ? 'success' : 'error'}`}>
             {message}

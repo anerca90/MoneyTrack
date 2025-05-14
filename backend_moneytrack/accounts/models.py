@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
 class Categoria(models.Model):
     TIPO_CHOICES = (
         ('ingreso', 'Ingreso'),
@@ -37,9 +38,20 @@ class Goal(models.Model):
     tipo = models.CharField(max_length=100)
     monto = models.DecimalField(max_digits=12, decimal_places=2)
     fecha = models.DateField()
-    progreso = models.PositiveIntegerField(default=0)
 
 class Contribution(models.Model):
     goal = models.ForeignKey(Goal, related_name='contributions', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
+
+class Alert(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=100, blank=True, null=True)  # ✅ Añadir esta línea
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField()
+    limite = models.DecimalField(max_digits=10, decimal_places=2)
+    tipo = models.CharField(max_length=10, choices=[('popup', 'Notificación'), ('color', 'Cambio de color')])
+    activa = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.nombre or f'Alerta #{self.id}'

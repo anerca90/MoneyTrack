@@ -1,90 +1,128 @@
+/* === Dashboard.css === */
+
 .dashboard-container {
-    margin-left: 20px;
-    padding: 30px;
-    min-height: 100vh;
-    box-sizing: border-box;
-  }
-  
-  .dashboard-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 60px;
-  }
-  
-  .dashboard-chart-box {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto 40px;
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .dashboard-filter {
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-    background: #e0f7fa;
-    padding: 20px 25px;
-    border-radius: 10px;
-    font-size: 14px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .dashboard-filter-buttons {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  
-  .dashboard-filter-button {
-    background-color: #ffffff;
-    border: 1px solid #aaa;
-    border-radius: 6px;
-    padding: 8px 14px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s, transform 0.2s;
-  }
-  
-  .dashboard-pie-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 45%;
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
+  padding: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9fafa;
+  color: #1f2937;
+}
+
+.dashboard-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.dashboard-filter-button {
+  background-color: #e5e7eb;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dashboard-filter-button:hover {
+  background-color: #d1d5db;
+}
+
+.dashboard-side-by-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.dashboard-half {
+  flex: 1;
+}
+
+.dashboard-balance {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  font-size: 1.25rem;
+  color: #374151;
+}
+
+.dashboard-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.dashboard-pie-section {
+  flex: 1;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.goals-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.goals-table th, .goals-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.goals-table th {
+  background-color: #3b82f6;
+  color: white;
+  text-align: left;
+}
+
+.goals-table td {
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+@media (min-width: 768px) {
   .dashboard-side-by-side {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 10px;
+    flex-direction: row;
   }
-  
-  .dashboard-half {
-    width: 50%;
+
+  .dashboard-row {
+    flex-direction: row;
   }
-  
-  @media (max-width: 900px) {
-    .dashboard-side-by-side {
-      flex-direction: column;
-    }
-  
-    .dashboard-pie-section {
-      width: 100%;
-    }
-  
-    .dashboard-half {
-      width: 100%;
-    }
+
+  .dashboard-pie-section {
+    padding: 0 1rem;
   }
-  
+}
+
+.mobile-hamburger {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1100;
+  background-color: #2c3e50;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 20px;
+  display: none; /* Oculto por defecto */
+}
+
+/* ✅ Mostrar SIEMPRE cuando el sidebar está colapsado */
+.navbar-sidebar.collapsed + .mobile-hamburger,
+.mobile-hamburger.force-show {
+  display: block;
+}

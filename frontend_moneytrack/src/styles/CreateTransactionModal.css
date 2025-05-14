@@ -1,0 +1,142 @@
+.create-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.create-modal {
+  background: white;
+  width: 90%;
+  max-width: 500px;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.create-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.create-modal-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.create-modal-body {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.input-group label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  display: block;
+  color: #374151;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #f9fafb;
+}
+
+.create-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.btn-green {
+  background-color: #10b981;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-green:hover {
+  background-color: #059669;
+}
+
+.btn-red {
+  background-color: #ef4444;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-red:hover {
+  background-color: #dc2626;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content,
+.create-modal {
+  animation: fadeSlideIn 0.4s ease-out;
+}
+
+.modal-overlay,
+.create-modal-overlay {
+  animation: fadeInOverlay 0.3s ease;
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+  padding: 0.6rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}

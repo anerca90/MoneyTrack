@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/Login.css'; // Importa tu hoja de estilos
+import '../styles/Login.css';
 
 function Login({ setIsAuthenticated }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
 
     try {
       const response = await fetch('http://192.168.1.90:8000/api/login/', {
@@ -20,16 +23,18 @@ function Login({ setIsAuthenticated }) {
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && data.token) {
         localStorage.setItem('token', data.token);
-        setIsAuthenticated(true);
-        navigate('/dashboard');
-        window.location.reload();
+        localStorage.setItem('username', data.user);
+        localStorage.removeItem('alertasNuevas'); // Limpia alertas anteriores por si acaso
+        window.location.href = '/dashboard'; // 🔁 Fuerza recarga completa de la app
       } else {
         setError(data.error || 'Credenciales inválidas');
       }
-    } catch (error) {
+    } catch (err) {
       setError('Error de conexión con el servidor');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,18 +61,31 @@ function Login({ setIsAuthenticated }) {
               className="login-input"
               required
             />
-            <button type="submit" className="login-button">
-              Iniciar sesión
-            </button>
+            <button
+              type="submit"
+              className="login-button"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="loading-content">
+                  <span className="spinner" /> Ingresando...
+                </span>
+              ) : 'Iniciar sesión'}            </button>
+
             <Link to="/register" className="login-link">
               ¿No tienes cuenta? Regístrate
             </Link>
-            <Link to="#" className="login-forgot">
+            <Link to="/forgot" className="login-forgot">
               Olvidé mi contraseña
             </Link>
             <hr className="login-hr" />
           </form>
-          {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+
+          {error && (
+            <p style={{ color: 'red', textAlign: 'center', marginTop: '10px' }}>
+              {error}
+            </p>
+          )}
         </div>
 
         {/* Columna derecha */}
