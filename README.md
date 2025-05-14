@@ -5,20 +5,33 @@ MoneyTrack es una aplicación web desarrollada en React y Django REST Framework 
 personales de forma visual, segura y organizada. Incluye gráficos, filtros y análisis de balance mensual, además de 
 funcionalidades como login, dashboard interactivo, y token de autenticación.
 
-🧰 Tecnologías Utilizadas
+ 🚀 Funcionalidades principales
 
-    - Frontend: React (JavaScript)
-    - Backend: Django REST Framework (Python)
-    - Base de Datos: SQLite (modo local)
-    - Herramientas de apoyo: Postman, GitHub, draw.io, VSCode
+- Registro y login de usuarios
+- Gestión de ingresos y egresos
+- Categorías personalizadas
+- Metas de ahorro con seguimiento
+- Alertas de gasto configurables
+- Panel de administración exclusivo para `admin1`
 
-    Requisitos:
+ 🛠️ Tecnologías utilizadas
+
+- **Frontend:** React, HTML, CSS
+- **Backend:** Django + Django REST Framework
+- **Base de datos:** SQLite
+- **Gráficos:** Recharts
+- **Autenticación:** Token (DRF)
+- **Exportación:** jsPDF, SheetJS (xlsx)
+- **Control de estado:** useState, useEffect, useCallback
+
+🧰 Requisitos:
 
     - Node.js y npm
     - Python 3.8+
     - pipenv o virtualenv
 
 ⚙️ Instalación Local
+
 1. Clonar el repositorio
     
     - git clone https://github.com/anerca90/MoneyTrack.git
@@ -40,6 +53,11 @@ funcionalidades como login, dashboard interactivo, y token de autenticación.
     - cd frontend_moneytrack
     - npm install
     - npm start
+
+👤 Usuario administrador
+        
+    - Usuario: admin1
+    - Contraseña: admin
 
 🔐 Login de Prueba
 
@@ -93,7 +111,13 @@ funcionalidades como login, dashboard interactivo, y token de autenticación.
     ✅ Categorías
     ✅ Metas
     ✅ APK Móvil
-    🕐 En desarrollo: Alertas
+    ✅  Alertas
+
+## 📄 Licencia
+
+    Este proyecto fue desarrollado como parte de un curso universitario y está destinado a fines educativos.
+
+
 
 👨‍💻 Autores
 
