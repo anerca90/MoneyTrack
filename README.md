@@ -1,128 +1,159 @@
-# MoneyTrack – Control Inteligente de Gastos Personales
+# 💰 MoneyTrack
 
+**MoneyTrack** 
+es una aplicación web y móvil para gestionar ingresos, egresos, metas de ahorro y alertas personalizadas.
+Pensada para el control financiero personal, está desarrollada con React en el frontend y Django REST Framework en el backend.
 
-MoneyTrack es una aplicación web desarrollada en React y Django REST Framework que permite gestionar ingresos y egresos 
-personales de forma visual, segura y organizada. Incluye gráficos, filtros y análisis de balance mensual, además de 
-funcionalidades como login, dashboard interactivo, y token de autenticación.
+---
 
- 🚀 Funcionalidades principales
+## 🚀 Funcionalidades principales
 
-- Registro y login de usuarios
-- Gestión de ingresos y egresos
-- Categorías personalizadas
-- Metas de ahorro con seguimiento
-- Alertas de gasto configurables
-- Panel de administración exclusivo para `admin1`
+1. Registro y login con token
+2. Dashboard con gráficos dinámicos
 
- 🛠️ Tecnologías utilizadas
+   * Gráfico de barras: ingresos vs. gastos por mes
+   * Gráfico de torta: distribución por categoría
+   * Balance automático
+3. Registro, edición y eliminación de transacciones
+4. Gestión de categorías de ingreso/gasto
+5. Metas de ahorro con seguimiento visual y aportes
+6. Alertas por límite de gasto (con notificaciones)
+7. Interfaz 100% responsiva
+8. Panel exclusivo para `admin1` con gestión de usuarios
 
-- **Frontend:** React, HTML, CSS
-- **Backend:** Django + Django REST Framework
-- **Base de datos:** SQLite
-- **Gráficos:** Recharts
-- **Autenticación:** Token (DRF)
-- **Exportación:** jsPDF, SheetJS (xlsx)
-- **Control de estado:** useState, useEffect, useCallback
+---
 
-🧰 Requisitos:
+## 🛠️ Tecnologías utilizadas
 
-    - Node.js y npm
-    - Python 3.8+
-    - pipenv o virtualenv
+* **Frontend:** React, HTML, CSS
+* **Backend:** Django, Django REST Framework
+* **Base de datos:** SQLite
+* **Gráficas:** Recharts
+* **Autenticación:** Token (DRF)
+* **Exportación de datos:** jsPDF, SheetJS (xlsx)
+* **Correo:** Servidor SMTP configurado para recuperación de contraseñas en tiempo real *(revisar carpeta de spam)*
 
-⚙️ Instalación Local
+---
 
-1. Clonar el repositorio
-    
-    - git clone https://github.com/anerca90/MoneyTrack.git
-    - cd MoneyTrack
+## 🧪 Clonar y ejecutar el proyecto
 
-2. Configurar el Backend
+```bash
+git clone https://github.com/anerca90/MoneyTrack.git
+cd MoneyTrack
+```
 
-    - cd backend_moneytrack
-    - python -m venv venv
-    - Entorno virtual
-        - Para Linux: source venv/bin/activate 
-        - Para Windows: venv\Scripts\activate
-    - pip install -r requirements.txt
-    - python manage.py migrate
-    - python manage.py runserver 0.0.0.0:8000
+---
 
-3. Configurar el Frontend
+## ⚙️ 1. Configurar el Backend
 
-    - cd frontend_moneytrack
-    - npm install
-    - npm start
+```bash
+cd backend_moneytrack
+python -m venv venv
 
-👤 Usuario administrador
-        
-    - Usuario: admin1
-    - Contraseña: admin
+# Activar entorno virtual:
+# En Linux/macOS:
+source venv/bin/activate
+# En Windows:
+venv\Scripts\activate
 
-🔐 Login de Prueba
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver 0.0.0.0:8000
+```
 
-    1) Puedes usar el endpoint de login en Postman:
+---
 
-        * URL: http://192.168.1.90:8000/api/login/
-        * Método: POST
-        * Cuerpo:
-                {
-                "username": "admin1",
-                "password": "admin"
-                }
-                
-    2) O bien directo en la pagina web:
+## 💻 2. Configurar el Frontend
 
-        * URL: http://192.168.1.90:3000
-        * Método: Web
-        * Credenciales:
-            "username": "admin1",
-            "password": "admin"
+```bash
+cd frontend_moneytrack
+npm install
+npm start
+```
 
-📱 Versión Móvil
+> Accede a la app en: `http://localhost:3000`
 
-    La aplicación móvil se conecta al backend por IP local. 
-        
-        Verifica que:
+---
 
-        1) Que ambos dispositivos estén en la misma red Wi-Fi.
-        2) Que tu servidor Django esté corriendo con 0.0.0.0:8000.
-        3) Que hayas reemplazado localhost por tu IP en los archivos fetch, axios, o servicios.
+## 👤 Usuario administrador
 
-📊 Funcionalidades Implementadas
+```
+Usuario:    admin1
+Contraseña: admin
+```
 
-    1) Autenticación con token (registro, login, logout)
-    2) Dashboard con gráficos:
-        A. Gráfico de barras: ingresos vs. gastos por mes
-        B. Gráficos de torta por categoría
-        C. Balance automáticoo
-    3) Filtros por rango de fechas
-    4) Registro, edición y eliminación de transacciones
-    5) Gestión de categorías de ingreso/gasto
-    6) Metas de ahorro con progreso y aportes
-    7) Alertas por límite de gasto (en desarrollo)
-    8) Totalmente responsiva (adaptada a móvil)
+---
 
-🚧 Estado del Proyecto
+## 🔐 Login de prueba
 
-    ✅ Login y registro
-    ✅ Transacciones
-    ✅ Dashboard con gráficos
-    ✅ Categorías
-    ✅ Metas
-    ✅ APK Móvil
-    ✅  Alertas
+### 🧪 Opción 1: vía Postman
+
+* **URL:** [http://192.168.1.90:8000/api/login/](http://192.168.1.90:8000/api/login/)
+* **Método:** POST
+* **Cuerpo JSON:**
+
+```json
+{
+  "username": "admin1",
+  "password": "admin"
+}
+```
+
+### 🌐 Opción 2: vía Web
+
+* **URL:** [http://192.168.1.90:3000](http://192.168.1.90:3000)
+* **Método:** Web
+* **Credenciales:** admin1 / admin
+
+---
+
+## 📱 Versión móvil
+
+La app móvil puede conectarse por IP local al backend. Asegúrate de:
+
+1. Que ambos dispositivos estén en la misma red Wi-Fi.
+2. Ejecutar Django con `0.0.0.0:8000`.
+3. Reemplazar `localhost` por tu IP en las llamadas `fetch` o `axios`.
+
+---
+
+## 🖼️ Capturas de pantalla
+
+### 🧭 Menú lateral
+
+Vista del panel de navegación con acceso a las secciones:
+
+![Sidebar](./frontend_moneytrack/screenshots/sidebar.png)
+
+---
+
+## 📊 Funcionalidades implementadas
+
+* ✅ Login y registro
+* ✅ Dashboard con gráficos
+* ✅ Transacciones con filtros por fecha
+* ✅ Gestión de categorías
+* ✅ Metas de ahorro
+* ✅ Exportación a PDF/Excel
+* ✅ Módulo de alertas
+* ✅ Versión APK móvil
+* ✅ Panel de usuarios (solo `admin1`)
+* ✅ Envío de correos para recuperación de contraseña en tiempo real
+* ✅ Todos los módulos funcionales y operativos
+
+---
+
+## 👨‍💻 Autores
+
+* Álvaro Santis Catalán
+* David Romero Vallejos
+* Yazmin Améstica Aránguiz
+* Yubram Barraza Pérez
+* Erick Espínola Landaeta
+
+---
 
 ## 📄 Licencia
 
-    Este proyecto fue desarrollado como parte de un curso universitario y está destinado a fines educativos.
-
-
-
-👨‍💻 Autores
-
-Álvaro Santis Catalán
-David Romero Vallejos
-Yazmin Améstica Aránguiz
-Yubram Barraza Pérez
-Erick Espínola Landaeta
+Este proyecto fue desarrollado como parte del curso universitario de Ingeniería en Computación e Informática (UNAB, 2025). 
+Destinado exclusivamente para fines educativos.
