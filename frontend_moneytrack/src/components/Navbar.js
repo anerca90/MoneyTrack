@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -7,7 +6,6 @@ import {
 } from 'react-icons/fa';
 import '../styles/Navbar.css';
 import logo from '../assets/moneytrack-logo.svg';
-
 
 function Navbar({ collapsed, setCollapsed, swipeHandlers }) {
   const sidebarRef = useRef(null);
@@ -31,23 +29,22 @@ function Navbar({ collapsed, setCollapsed, swipeHandlers }) {
       });
   }, []);
 
-  // Revisar alertas nuevas
+  // Revisar alertas nuevas cada 5 segundos o por evento
   useEffect(() => {
     const revisarAlertas = () => {
       const almacenadas = JSON.parse(localStorage.getItem('alertasNuevas') || '[]');
       const recientes = almacenadas.filter(a => Date.now() - a.timestamp < 5 * 60 * 1000);
       const cantidad = recientes.length;
 
-      if (cantidad !== nuevasAlertas) {
-        setNuevasAlertas(cantidad);
-        if (cantidad > 0) {
-          setAnimar(true);
-          setTimeout(() => setAnimar(false), 500);
-        }
+      setNuevasAlertas(cantidad);
+      if (cantidad > 0) {
+        setAnimar(true);
+        setTimeout(() => setAnimar(false), 500);
       }
     };
 
-    revisarAlertas();
+    revisarAlertas(); // Primera vez
+
     intervalRef.current = setInterval(revisarAlertas, 5000);
     window.addEventListener('alerta-nueva', revisarAlertas);
     window.addEventListener('storage', revisarAlertas);
@@ -57,18 +54,20 @@ function Navbar({ collapsed, setCollapsed, swipeHandlers }) {
       window.removeEventListener('alerta-nueva', revisarAlertas);
       window.removeEventListener('storage', revisarAlertas);
     };
-  }, [nuevasAlertas]);
+  }, []); // <-- solo una vez, no depende de nuevasAlertas
 
+  // Al entrar a /alerts, limpiar notificación
   useEffect(() => {
     if (location.pathname === '/alerts') {
       setNuevasAlertas(0);
       localStorage.removeItem('alertasNuevas');
+      window.dispatchEvent(new CustomEvent('alerta-nueva'));
     }
   }, [location.pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setCollapsed(true); // 🔒 colapsa el sidebar de inmediato
+    setCollapsed(true);
     navigate('/');
   };
 
@@ -99,11 +98,19 @@ function Navbar({ collapsed, setCollapsed, swipeHandlers }) {
           <Link to="/transactions" className="navbar-link"><FaClipboardList className="navbar-icon" /> <span className="navbar-label">Transacciones</span></Link>
           <Link to="/categories" className="navbar-link"><FaBullseye className="navbar-icon" /> <span className="navbar-label">Categorías</span></Link>
           <Link to="/goals" className="navbar-link"><FaCog className="navbar-icon" /> <span className="navbar-label">Metas</span></Link>
-          <Link to="/alerts" className="navbar-link"><div className="navbar-icon-wrapper"><FaBell className="navbar-icon" />{nuevasAlertas > 0 && (
+          
+          <Link to="/alerts" className="navbar-link">
+            <div className="navbar-icon-wrapper">
+              <FaBell className={`navbar-icon ${nuevasAlertas > 0 ? 'notificacion-activa' : ''}`} />
+              {nuevasAlertas > 0 && (
                 <span className={`notificacion-badge ${animar ? 'bounce' : ''}`} title={`${nuevasAlertas} alerta(s)`}>
                   {nuevasAlertas}
-                </span>)}</div><span className="navbar-label">Alertas</span>
+                </span>
+              )}
+            </div>
+            <span className="navbar-label">Alertas</span>
           </Link>
+
           {username === 'admin1' && (
             <>
               <div className="navbar-divider" />
@@ -113,7 +120,6 @@ function Navbar({ collapsed, setCollapsed, swipeHandlers }) {
               </Link>
             </>
           )}
-
         </nav>
 
         <div className="navbar-footer">

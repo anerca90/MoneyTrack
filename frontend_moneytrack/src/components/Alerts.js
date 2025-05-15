@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import axios from 'axios';
 import EditAlertModal from './EditAlertModal';
 import '../styles/Alerts.css';
@@ -26,10 +26,10 @@ const Alerts = () => {
     activa: true
   });
 
-  const [mensajeAlerta, setMensajeAlerta] = useState('');
-  const [showedPopup, setShowedPopup] = useState({});
+  const [mensajeAlerta, setMensajeAlerta] = useState('null');
   const [selectedAlert, setSelectedAlert] = useState(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const alertaCerradaRef = useRef({});
 
   useEffect(() => {
   getAxios().get('alerts/')
@@ -52,22 +52,33 @@ const Alerts = () => {
   }, [transactions]);
 
   useEffect(() => {
-    alerts.forEach(alerta => {
-      const porcentaje = calcularPorcentaje(alerta);
-      if (alerta.tipo === 'popup' && porcentaje >= 100 && alerta.activa && !showedPopup[alerta.id]) {
-        const mensaje = `⚠️ Has superado el límite de $${parseFloat(alerta.limite).toLocaleString()}`;
-        setMensajeAlerta(mensaje);
-        setShowedPopup(prev => ({ ...prev, [alerta.id]: true }));
+    const verificarAlertas = () => {
+      alerts.forEach(alerta => {
+        const porcentaje = calcularPorcentaje(alerta);
 
-        const existentes = JSON.parse(localStorage.getItem('alertasNuevas') || '[]');
-        if (!existentes.some(a => a.id === alerta.id)) {
-          const nuevas = [...existentes, { id: alerta.id, mensaje, timestamp: Date.now() }];
-          localStorage.setItem('alertasNuevas', JSON.stringify(nuevas));
-          window.dispatchEvent(new CustomEvent('alerta-nueva'));
+        if (alerta.tipo === 'popup' && porcentaje >= 100 && alerta.activa) {
+          if (!alertaCerradaRef.current[alerta.id]) {
+            const mensaje = `⚠️ Has superado el límite de $${parseFloat(alerta.limite).toLocaleString()}`;
+            setMensajeAlerta({ id: alerta.id, mensaje });
+
+            const existentes = JSON.parse(localStorage.getItem('alertasNuevas') || '[]');
+            if (!existentes.some(a => a.id === alerta.id)) {
+              const nuevas = [...existentes, { id: alerta.id, mensaje, timestamp: Date.now() }];
+              localStorage.setItem('alertasNuevas', JSON.stringify(nuevas));
+              window.dispatchEvent(new CustomEvent('alerta-nueva'));
+            }
+          }
         }
-      }
-    });
-  }, [alerts, calcularPorcentaje, showedPopup]);
+      });
+    };
+
+    verificarAlertas(); // Primera llamada inmediata
+    const interval = setInterval(verificarAlertas, 30000); // Cada 30 segundos
+
+    return () => clearInterval(interval);
+  }, [alerts, transactions, calcularPorcentaje]);
+
+
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -125,10 +136,22 @@ const Alerts = () => {
 
   return (
     <div className="alerts-container">
-      {mensajeAlerta && (
+      {mensajeAlerta?.mensaje && (
         <div className="alert-banner">
-          {mensajeAlerta}
-          <button className="close-button" onClick={() => setMensajeAlerta('')}>✖</button>
+          <span className="alert-text">{mensajeAlerta.mensaje}</span>
+          <button
+            className="close-button"
+            onClick={() => {
+              setMensajeAlerta(null);
+              // 🔄 Eliminar alerta del localStorage
+              const almacenadas = JSON.parse(localStorage.getItem('alertasNuevas') || '[]');
+              const filtradas = almacenadas.filter(a => a.id !== mensajeAlerta.id);
+              localStorage.setItem('alertasNuevas', JSON.stringify(filtradas));
+              window.dispatchEvent(new CustomEvent('alerta-nueva'));
+            }}
+          >
+            ✖
+          </button>
         </div>
       )}
 
